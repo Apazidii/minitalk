@@ -1,0 +1,1 @@
+CMakeLists.txt not found in /home/apazidi/Рабочий стол/sh21/minitalk Select CMakeLists.txt
