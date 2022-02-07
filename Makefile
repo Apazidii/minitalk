@@ -1,9 +1,10 @@
 NAME	= prog
-FUNCS 	= test.c
+FUNCS 	=		\
+				ft_utils.c s1.c
 FUNCSO = ${FUNCS:.c=.o}
 GCC = gcc
-CFLAGS = -Wall -Wextra -Werror -c
-HDRS = head.h
+CFLAGS = -c
+HDRS = minitalk.h
 
 all:		${NAME}
 

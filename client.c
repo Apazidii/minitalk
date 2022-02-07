@@ -1,62 +1,43 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include "minitalk.h"
 
-
-long long convert (int n)
+void error_exit(char *message)
 {
-    long long bin;
-    int rem;
-    int i;
+    ft_putendl_fd(message, 1);
+    exit(0);
+}
 
-    rem = 1;
-    i = 1;
-    bin = 0;
+void send_char(int pid, char c)
+{
+    int b;
 
-    while (n != 0)
+    b = 8;
+    while (b--)
     {
-        rem = n % 2;
-        n /= 2;
-        bin += rem * i;
-        i *= 10;
+        if (c & (1 << b))
+            if (kill(pid, SIGUSR2))
+                error_exit("\n|error send SIGUSR2|\n");
+        if (!(c & (1 << b)))
+            if (kill(pid, SIGUSR1))
+                error_exit("\n|error send SIGUSR1|\n");
+        if (usleep(666))
+            error_exit("\n|error wait|\n");
     }
-
-    return bin;
 }
 
-int ft_strlen (char *s)
+void send_message(int pid, char *message)
 {
-    int i;
-
-    i = 0;
-    while (s[i] != '\0')
-        i++;
-    return (i);
-}
-
-long long int *str_to_bin (char *s)
-{
-    int k;
-    int i;
-    long long int *res;
-
-    k = ft_strlen (s);
-    i = 0;
-    res = (long long int *)malloc(sizeof (long long int) * k);
-    while (i < k)
+    while (*message)
     {
-        res[i] = convert ((int) (s[i]));
-        i++;
+        send_char(pid, *message);
+        message++;
     }
-    return (res);
 }
 
-int main ()
+int main(int argc, char *argv[])
 {
-    char str[] = "Hello world!";
-    long long *res;
-
-    res = str_to_bin(str);
-    
-
+    if (argc != 3)
+        ft_putendl_fd("non arg",1);
+    else
+        send_message(ft_atoi(argv[1]), argv[2]);
 }
 
