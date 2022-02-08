@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   ft_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dgalactu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/08 03:32:38 by dgalactu          #+#    #+#             */
-/*   Updated: 2022/02/08 03:37:02 by dgalactu         ###   ########.fr       */
+/*   Created: 2022/02/08 03:28:28 by dgalactu          #+#    #+#             */
+/*   Updated: 2022/02/08 03:44:02 by oem              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "minitalk.h"
 
-# include <signal.h>
-# include <stdlib.h>
-# include <sys/types.h>
-# include <unistd.h>
+void	error_exit(char *message)
+{
+	ft_putendl_fd(message, 1);
+	exit(0);
+}
 
-void	ft_putendl_fd(char *s, int fd);
-int		ft_atoi(const char *s);
-void	ft_putnbr_fd(int n, int fd);
-void	error_exit(char *message);
+static void	func(long int n, int fd)
+{
+	char	c;
 
-#endif
+	if (n >= 10)
+		func(n / 10, fd);
+	c = '0' + (n % 10);
+	write(fd, &c, 1);
+}
+
+void	ft_putnbr_fd(int n, int fd)
+{
+	long int	num;
+
+	num = n;
+	if (num < 0)
+	{
+		num = num * -1;
+		write(fd, "-", 1);
+	}
+	func(num, fd);
+}

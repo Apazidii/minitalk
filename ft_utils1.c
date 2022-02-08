@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: oem <oem@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dgalactu <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/07 14:58:05 by oem               #+#    #+#             */
-/*   Updated: 2022/02/07 15:01:29 by oem              ###   ########.fr       */
+/*   Created: 2022/02/07 14:58:05 by dgalactu          #+#    #+#             */
+/*   Updated: 2022/02/08 03:44:02 by oem              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minitalk.h"
 
 void	ft_putendl_fd(char *s, int fd)
@@ -33,7 +34,7 @@ static char	*nospace(char *c)
 
 	i = 0;
 	while (c[i] == ' ' || c[i] == '\f' || c[i] == '\n' || \
-        c[i] == '\r' || c[i] == '\t' || c[i] == '\v')
+		c[i] == '\r' || c[i] == '\t' || c[i] == '\v')
 	{
 		i++;
 	}
@@ -93,27 +94,4 @@ int	ft_atoi(const char *s)
 	if (b)
 		n = n * -1;
 	return (check(n, nospace(ss)));
-}
-
-static void	func(long int n, int fd)
-{
-	char	c;
-
-	if (n >= 10)
-		func(n / 10, fd);
-	c = '0' + (n % 10);
-	write(fd, &c, 1);
-}
-
-void	ft_putnbr_fd(int n, int fd)
-{
-	long int	num;
-
-	num = n;
-	if (num < 0)
-	{
-		num = num * -1;
-		write(fd, "-", 1);
-	}
-	func(num, fd);
 }

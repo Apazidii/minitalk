@@ -1,23 +1,41 @@
-NAME	= prog
-FUNCS 	=		\
-				ft_utils.c s1.c
-FUNCSO = ${FUNCS:.c=.o}
-GCC = gcc
-CFLAGS = -c
-HDRS = minitalk.h
+PATH_SRC = ./src/
+CLIENT = client
+SERVER = server
 
-all:		${NAME}
+UTILS = ./ft_utils1.c ./ft_utils2.c
+FILES_S = ./server.c
+FILES_C = ./client.c
 
-${NAME}:	${FUNCSO} ${HDRS}
-			${GCC} ${FUNCSO} -o ${NAME}
+OBJ_UTILS = $(UTILS:.c=.o)
+OBJ_SERVER = $(FILES_S:.c=.o)
+OBJ_CLIENT = $(FILES_C:.c=.o)
 
-.c.o:
-			${GCC} ${CFLAGS} $< -o ${<:.c=.o}
+HDR = minitalk.h
+MAKE = Makefile
+
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
+RM = rm -rf
+
+all: $(CLIENT) $(SERVER)
+
+
+$(CLIENT): $(OBJ_CLIENT) $(OBJ_UTILS) $(HDR) $(MAKE)
+	@ $(CC) $(CFLAGS) $(OBJ_CLIENT) $(OBJ_UTILS) -o $(CLIENT)
+	@ echo client done
+
+$(SERVER): $(OBJ_SERVER) $(OBJ_UTILS) $(HDR) $(MAKE)
+	@ $(CC) $(CFLAGS) $(OBJ_SERVER) $(OBJ_UTILS) -o $(SERVER)
+	@ echo server done
+
+bonus: all
 
 clean:
-		rm -f ${FUNCSO}
+	@ $(RM) $(OBJ_CLIENT) $(OBJ_SERVER) $(OBJ_UTILS)
 
 fclean:	clean
-		rm -f ${NAME}
+	@ $(RM) server client
 
-.PHONY:	all clean fclean
+re: fclean all
+
+.PHONY: all bonus re clean fclean
