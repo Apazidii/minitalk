@@ -21,20 +21,18 @@ all: $(CLIENT) $(SERVER)
 
 
 $(CLIENT): $(OBJ_CLIENT) $(OBJ_UTILS) $(HDR) $(MAKE)
-	@ $(CC) $(CFLAGS) $(OBJ_CLIENT) $(OBJ_UTILS) -o $(CLIENT)
-	@ echo client done
+	$(CC) $(CFLAGS) $(OBJ_CLIENT) $(OBJ_UTILS) -o $(CLIENT)
 
 $(SERVER): $(OBJ_SERVER) $(OBJ_UTILS) $(HDR) $(MAKE)
-	@ $(CC) $(CFLAGS) $(OBJ_SERVER) $(OBJ_UTILS) -o $(SERVER)
-	@ echo server done
+	$(CC) $(CFLAGS) $(OBJ_SERVER) $(OBJ_UTILS) -o $(SERVER)
 
 bonus: all
 
 clean:
-	@ $(RM) $(OBJ_CLIENT) $(OBJ_SERVER) $(OBJ_UTILS)
+	$(RM) $(OBJ_CLIENT) $(OBJ_SERVER) $(OBJ_UTILS)
 
 fclean:	clean
-	@ $(RM) server client
+	$(RM) server client
 
 re: fclean all
 

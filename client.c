@@ -51,7 +51,7 @@ int	main(int argc, char *argv[])
 {
 	signal(SIGUSR1, receive);
 	if (argc != 3)
-		ft_putendl_fd("./client pid \"message\"", 1);
+		error_exit("./client pid \"message\"");
 	else
 		send_message(ft_atoi(argv[1]), argv[2]);
 	while (1)
