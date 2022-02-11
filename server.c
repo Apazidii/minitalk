@@ -59,7 +59,7 @@ void	set_sigaction_struct(struct sigaction *sa, sigset_t non_mask)
 void	goodbye(int sig)
 {
 	(void) sig;
-	write(1, "\nServer closed. GoodBye :)\n", 12);
+	write(1, "\nServer closed. GoodBye :)\n", 27);
 	exit(0);
 }
 
